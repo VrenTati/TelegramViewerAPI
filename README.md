@@ -35,6 +35,8 @@ Create a `.env` file in the root of the project and set the following variables:
 SECRET_KEY=your_secret_key
 ALGORITHM=HS256
 ACCESS_TOKEN_EXPIRE_MINUTES=30
+TELEGRAM_API_ID=your_telegram_api_id
+TELEGRAM_API_HASH=your_telegram_api_hash
 ```
 
 ### 4. Run the Application
@@ -65,21 +67,23 @@ The application will be available at `http://localhost:8000`.
 ### Telegram Integration Endpoints
 
 - **`POST /telegram/connect`**: Send a code to the user’s Telegram account.
-  - Request Body: `{ "phone": "+123456789" }`
+  - Query Parameters: `phone=+123456789`
   - Response: `{ "status": "success", "message": "Code sent to your Telegram account" }`
 
 - **`POST /telegram/login`**: Complete Telegram login using the verification code.
-  - Request Body: `{ "phone": "+123456789", "code": "12345" }`
+  - Query Parameters: `phone=+123456789, code=12345`
   - Response: `{ "status": "success", "message": "Login successful" }`
 
 - **`GET /telegram/chats`**: Retrieve all chats for the connected Telegram account.
+  - Query Parameters: `phone`
   - Response: `{ "status": "success", "data": { "chats": [...] } }`
 
 - **`GET /telegram/messages`**: Retrieve messages for a specific chat.
-  - Query Parameters: `phone`, `chat_id`, `limit`
+  - Query Parameters: `phone`, `chat_id`, `limit - optional`
   - Response: `{ "status": "success", "data": { "messages": [...] } }`
 
 - **`POST /telegram/logout`**: Disconnect the Telegram account.
+  - Query Parameters: `phone`
   - Response: `{ "status": "success", "message": "Logout successful" }`
 
 ## Database
